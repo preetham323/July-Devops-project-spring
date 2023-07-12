@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: install git
+      yum:
+        name: "{{item}}"
+        state: present
+        loop:
+          - git
+          - aws cli
+          - docker
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
